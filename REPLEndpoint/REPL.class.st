@@ -18,14 +18,24 @@ Class {
 }
 
 { #category : #accessing }
+REPL class >> envAt: aSymbol ifAbsent: aBlock [
+	^ OSEnvironment current at: aSymbol asString ifAbsent: aBlock
+]
+
+{ #category : #accessing }
 REPL class >> initializeServer [
-	server := ZnServer on: 9099.
+	server := ZnServer on: self port.
 	server
 		delegate:
 			(ZnJSONRestServerDelegate new
 				uriSpace: REPLRestUriSpace new;
 				yourself).
 	^ server
+]
+
+{ #category : #accessing }
+REPL class >> port [
+	^ self envAt: 'REPL_PORT' ifAbsent: [ 9099 ]
 ]
 
 { #category : #accessing }
