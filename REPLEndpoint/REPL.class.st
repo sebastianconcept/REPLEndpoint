@@ -12,6 +12,7 @@ Class {
 	#name : #REPL,
 	#superclass : #Object,
 	#classInstVars : [
+		'port',
 		'server'
 	],
 	#category : #REPLEndpoint
@@ -22,23 +23,45 @@ REPL class >> envAt: aSymbol ifAbsent: aBlock [
 	^ OSEnvironment current at: aSymbol asString ifAbsent: aBlock
 ]
 
+{ #category : #initializing }
+REPL class >> initializePort [
+	^ port := self envAt: 'REPL_PORT' ifAbsent: [ 9099 ]
+]
+
 { #category : #accessing }
-REPL class >> initializeServer [
-	server := ZnServer on: self port.
+REPL class >> port [
+	^ port ifNil: [ self initializePort ]
+]
+
+{ #category : #accessing }
+REPL class >> port: anInteger [
+	port := anInteger
+]
+
+{ #category : #accessing }
+REPL class >> server [
+	^ server 
+]
+
+{ #category : #actions }
+REPL class >> start [
+	
+	^ self startOn: self port
+]
+
+{ #category : #actions }
+REPL class >> startOn: aPort [
+	server := ZnServer on: aPort.
 	server
 		delegate:
 			(ZnJSONRestServerDelegate new
 				uriSpace: REPLRestUriSpace new;
 				yourself).
-	^ server
+	^ server start
 ]
 
-{ #category : #accessing }
-REPL class >> port [
-	^ self envAt: 'REPL_PORT' ifAbsent: [ 9099 ]
-]
-
-{ #category : #accessing }
-REPL class >> server [
-	^ server ifNil: [ self initializeServer ]
+{ #category : #actions }
+REPL class >> stop [
+	server ifNotNil: [ server stop ].
+	server := nil
 ]
