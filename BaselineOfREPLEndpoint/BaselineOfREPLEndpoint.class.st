@@ -10,9 +10,7 @@ BaselineOfREPLEndpoint >> baseline: spec [
 	spec
 		for: #common
 		do: [ self restServer: spec.
-			spec
-				package: #REPLEndpoint
-				with: [ spec requires: #('REPLEndpoint') ] ]
+			spec package: 'REPLEndpoint' ]
 ]
 
 { #category : #baselines }
