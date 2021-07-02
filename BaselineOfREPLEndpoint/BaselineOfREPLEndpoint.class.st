@@ -1,7 +1,7 @@
 Class {
 	#name : #BaselineOfREPLEndpoint,
 	#superclass : #BaselineOf,
-	#category : #REPLEndpoint
+	#category : #BaselineOfREPLEndpoint
 }
 
 { #category : #baselines }
