@@ -29,3 +29,12 @@ curl -H "Content-Type: text/plain" --request POST 'http://localhost:1853/repl' -
 
 Will return: `11`
 
+### Docker
+
+```bash
+docker build -t repl .
+```
+
+```bash
+docker run --rm -e REPL_PORT=1853 -p 1853:1853 repl
+```
