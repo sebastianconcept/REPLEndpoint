@@ -18,7 +18,7 @@ BaselineOfREPLEndpoint >> restServer: spec [
 	spec
 		baseline: 'ZincHTTPComponents'
 		with: [ spec
-				repository: 'github://svenvc/zinc:v4/repository';
+				repository: 'github://svenvc/zinc:v3.0.1/repository';
 				loads: #('REST') ]
 ]
 
